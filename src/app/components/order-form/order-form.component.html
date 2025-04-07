@@ -1,0 +1,67 @@
+<div class="order-form-container">
+  <form [formGroup]="orderForm" class="order-form">
+    <h1>Place Your Order</h1>
+    
+    <div class="form-section">
+      <h2>Customer Information</h2>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="customerName">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" formControlName="phoneNumber">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>Order Items</h2>
+      <div class="order-items" formArrayName="items">
+        <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="order-item">
+          <div class="form-group">
+            <label [for]="'item-' + i">Item</label>
+            <select [id]="'item-' + i" formControlName="name">
+              <option value="">Select an item</option>
+              <option *ngFor="let menuItem of menuItems" [value]="menuItem.name">
+                {{ menuItem.name }} - ${{ menuItem.price.toFixed(2) }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label [for]="'quantity-' + i">Quantity</label>
+            <input type="number" [id]="'quantity-' + i" formControlName="quantity" min="1">
+          </div>
+          <button type="button" class="remove-btn" (click)="removeItem(i)">Remove</button>
+        </div>
+      </div>
+      <button type="button" class="add-btn" (click)="addItem()">Add Item</button>
+    </div>
+  </form>
+
+  <div class="summary-section">
+    <app-order-summary>
+      <div *ngIf="orderForm.get('customerName')?.value || orderForm.get('phoneNumber')?.value || items.length > 0">
+        <div *ngIf="orderForm.get('customerName')?.value || orderForm.get('phoneNumber')?.value" class="customer-info">
+          <h3>Customer Details</h3>
+          <p *ngIf="orderForm.get('customerName')?.value"><strong>Name:</strong> {{ orderForm.get('customerName')?.value }}</p>
+          <p *ngIf="orderForm.get('phoneNumber')?.value"><strong>Phone:</strong> {{ orderForm.get('phoneNumber')?.value }}</p>
+        </div>
+        
+        <div *ngIf="items.length > 0" class="order-items-summary">
+          <h3>Order Items</h3>
+          <div *ngFor="let item of items.controls" class="order-item-summary">
+            <p><strong>{{ item.get('name')?.value }}</strong> x {{ item.get('quantity')?.value }}</p>
+            <p class="item-price">${{ (getItemPrice(item) * item.get('quantity')?.value).toFixed(2) }}</p>
+          </div>
+          <div class="total">
+            <h3>Total: ${{ calculateTotal().toFixed(2) }}</h3>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!orderForm.get('customerName')?.value && !orderForm.get('phoneNumber')?.value && items.length === 0" class="empty-summary">
+        <p>No order details yet. Start by adding items to your order.</p>
+      </div>
+    </app-order-summary>
+    <button type="submit" class="submit-btn" (click)="submitOrder()">Place Order</button>
+  </div>
+</div> 
