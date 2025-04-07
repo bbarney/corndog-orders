@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { OrderSummaryComponent } from '../order-summary/order-summary.component';
 import { MenuService } from '../../services/menu.service';
-import { OrderService } from '../../services/order.service';
+import { RemoteOrderService } from '../../services/remote-order.service';
 import { MenuItem } from '../../models/menu-item.model';
 import { Order } from '../../models/order.model';
 
@@ -26,7 +26,7 @@ export class OrderFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private menuService: MenuService,
-    private orderService: OrderService
+    private orderService: RemoteOrderService
   ) {
     this.orderForm = this.fb.group({
       customerName: ['', Validators.required],
@@ -47,7 +47,7 @@ export class OrderFormComponent implements OnInit {
 
   addItem(): void {
     this.items.push(this.fb.group({
-      name: ['', Validators.required],
+      name: ['Epic', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]]
     }));
   }
@@ -67,6 +67,9 @@ export class OrderFormComponent implements OnInit {
   }
 
   submitOrder(): void {
+    console.log('Form validity:', this.orderForm.valid);
+    console.log('Form value:', this.orderForm.value);
+    
     if (this.orderForm.valid) {
       const menuItems = this.items.controls.map(item => {
         const nameControl = item.get('name');
@@ -89,18 +92,32 @@ export class OrderFormComponent implements OnInit {
       const totalAmount = menuItems.reduce((total, item) => 
         total + (item.menuItem.price * item.quantity), 0);
 
-      this.orderService.addOrder({
+      const newOrder: Order = {
+        id: crypto.randomUUID(),
         customerName: this.orderForm.get('customerName')?.value,
         phoneNumber: this.orderForm.get('phoneNumber')?.value,
         items: menuItems,
-        totalAmount
-      });
+        totalAmount,
+        date: new Date(),
+        orderType: 'Manual'
+      };
+
+      console.log('Creating new order:', newOrder);
+      this.orderService.addOrder(newOrder);
 
       // Reset the form
       this.orderForm.reset();
       while (this.items.length) {
         this.items.removeAt(0);
       }
+    } else {
+      console.log('Form validation errors:', this.orderForm.errors);
+      console.log('Customer name errors:', this.orderForm.get('customerName')?.errors);
+      console.log('Phone number errors:', this.orderForm.get('phoneNumber')?.errors);
+      console.log('Items array length:', this.items.length);
+      this.items.controls.forEach((item, index) => {
+        console.log(`Item ${index} errors:`, item.errors);
+      });
     }
   }
 } 

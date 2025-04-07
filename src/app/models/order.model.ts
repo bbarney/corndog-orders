@@ -12,4 +12,5 @@ export interface Order {
   items: OrderItem[];
   totalAmount: number;
   date: Date;
+  orderType: 'Manual' | 'Remote';
 } 

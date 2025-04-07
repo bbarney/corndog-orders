@@ -1,0 +1,30 @@
+<div class="orders-list">
+  <h2>Orders</h2>
+  <div class="orders-container">
+    <div *ngFor="let order of orders" class="order-card">
+      <div class="order-header">
+        <div class="order-title">
+          <h3>Order #{{ order.id.slice(0, 8) }}</h3>
+          <span class="order-type" [ngClass]="{'manual': order.orderType === 'Manual', 'remote': order.orderType === 'Remote'}">
+            {{ order.orderType }}
+          </span>
+        </div>
+        <span class="order-date">{{ order.date | date:'medium' }}</span>
+      </div>
+      <div class="customer-info">
+        <p><strong>Customer:</strong> {{ order.customerName }}</p>
+        <p><strong>Phone:</strong> {{ order.phoneNumber }}</p>
+      </div>
+      <div class="order-items">
+        <h4>Items:</h4>
+        <div *ngFor="let item of order.items" class="order-item">
+          <span>{{ item.menuItem.name }} x {{ item.quantity }}</span>
+          <span class="item-price">{{ item.menuItem.price * item.quantity | currencyFormat }}</span>
+        </div>
+      </div>
+      <div class="order-total">
+        <strong>Total:</strong> {{ order.totalAmount | currencyFormat }}
+      </div>
+    </div>
+  </div>
+</div> 

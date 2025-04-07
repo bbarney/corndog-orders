@@ -7,7 +7,7 @@ import { MenuService } from './menu.service';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class RemoteOrderService {
   private ordersSubject = new BehaviorSubject<Order[]>([]);
   private menuItems: MenuItem[] = [];
   private manualOrderSubject = new BehaviorSubject<Order | null>(null);
@@ -54,7 +54,7 @@ export class OrderService {
     const totalAmount = items.reduce((total, item) => 
       total + (item.menuItem.price * item.quantity), 0);
 
-    return {
+    const order = {
       id: crypto.randomUUID(),
       customerName: randomName,
       phoneNumber: randomPhone,
@@ -63,9 +63,13 @@ export class OrderService {
       date: new Date(),
       orderType: 'Remote' as const
     };
+
+    console.log('Generated remote order:', order);
+    return order;
   }
 
   addOrder(order: Order): void {
+    console.log('Adding manual order:', order);
     this.manualOrderSubject.next(order);
   }
 
