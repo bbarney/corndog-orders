@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RemoteOrderService } from '../../services/remote-order.service';
+import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/order.model';
 import { CurrencyFormatPipe } from '../../pipes/currency-format.pipe';
 
@@ -14,7 +14,7 @@ import { CurrencyFormatPipe } from '../../pipes/currency-format.pipe';
 export class OrdersListComponent implements OnInit {
   orders: Order[] = [];
 
-  constructor(private orderService: RemoteOrderService) {}
+  constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
     this.orderService.getOrders().subscribe(orders => {

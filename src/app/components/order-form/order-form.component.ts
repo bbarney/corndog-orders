@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { OrderSummaryComponent } from '../order-summary/order-summary.component';
 import { MenuService } from '../../services/menu.service';
-import { RemoteOrderService } from '../../services/remote-order.service';
+import { OrderService } from '../../services/order.service';
 import { MenuItem } from '../../models/menu-item.model';
 import { Order } from '../../models/order.model';
 
@@ -26,7 +26,7 @@ export class OrderFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private menuService: MenuService,
-    private orderService: RemoteOrderService
+    private orderService: OrderService
   ) {
     this.orderForm = this.fb.group({
       customerName: ['', Validators.required],
