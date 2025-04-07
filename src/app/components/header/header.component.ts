@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
     <header class="header">
       <div class="header-content">
         <img src="/assets/images/corndog-logo.png" alt="Corndog Company Logo" class="logo">
-        <h1 class="title">Corndog Orders</h1>
+        <h1 class="title">The Corndog Company</h1>
         <img src="/assets/images/food-truck.jpg" alt="Food Truck" class="truck-image">
       </div>
     </header>
