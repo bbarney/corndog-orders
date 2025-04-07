@@ -11,6 +11,18 @@ export class OrderService {
   private ordersSubject = new BehaviorSubject<Order[]>([]);
   private menuItems: MenuItem[] = [];
   private manualOrderSubject = new BehaviorSubject<Order | null>(null);
+  private simpsonsCharacters = [
+    'Homer Simpson',
+    'Marge Simpson',
+    'Bart Simpson',
+    'Lisa Simpson',
+    'Maggie Simpson',
+    'Ned Flanders',
+    'Moe Szyslak',
+    'Barney Gumble',
+    'Chief Wiggum',
+    'Krusty the Clown'
+  ];
 
   constructor(private menuService: MenuService) {
     // Initialize menu items
@@ -40,7 +52,7 @@ export class OrderService {
   }
 
   private generateRandomOrder(): Order {
-    const randomName = `Customer-${Math.floor(Math.random() * 1000)}`;
+    const randomName = this.simpsonsCharacters[Math.floor(Math.random() * this.simpsonsCharacters.length)];
     const randomPhone = `555-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
     
     // Generate 1-3 random items
