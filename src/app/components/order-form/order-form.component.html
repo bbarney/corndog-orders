@@ -1,4 +1,5 @@
 <div class="order-form-container">
+  <div class="mini-image"></div>
   <form [formGroup]="orderForm" class="order-form">
     <h1>Place Your Order</h1>
     
@@ -37,7 +38,6 @@
       <button type="button" class="add-btn" (click)="addItem()">Add Item</button>
     </div>
   </form>
-
   <div class="summary-section">
     <app-order-summary>
       <div *ngIf="orderForm.get('customerName')?.value || orderForm.get('phoneNumber')?.value || items.length > 0">

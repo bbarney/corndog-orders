@@ -17,6 +17,17 @@
   border: 1px solid #ccc;
 }
 
+.mini-image {
+  flex: 1;
+  min-width: 300px;
+  background-image: url('/assets/images/mini.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .summary-section {
   flex: 1;
   position: relative;
