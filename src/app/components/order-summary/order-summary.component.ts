@@ -23,7 +23,7 @@ interface Order {
   `,
   styles: [`
     .order-summary {
-      background-color: #f8f9fa;
+      background-color:rgb(228, 228, 228);
       border-radius: 8px;
       padding: 20px;
       margin-left: 20px;

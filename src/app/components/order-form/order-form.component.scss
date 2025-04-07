@@ -14,6 +14,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   min-width: 0;
+  border: 1px solid #ccc;
 }
 
 .summary-section {
@@ -28,12 +29,17 @@
 
 .form-group {
   margin-bottom: 15px;
+  padding-right: 20px;
   flex: 1;
 }
 
 .form-group:last-child {
-  flex: 0.5;
+  flex: 0.3;
   margin-right: 20px;
+}
+
+.form-group:last-child input {
+  width: 150px;
 }
 
 label {
@@ -112,7 +118,7 @@ input, select {
   justify-content: space-between;
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #f8f9fa;
+  background-color: #e9ecef;
   border-radius: 4px;
 }
 
